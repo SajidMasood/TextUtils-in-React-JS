@@ -1,0 +1,83 @@
+import React, {useState} from 'react'
+
+
+
+export default function TextForm(props) {
+
+    // use state text->'Enter text here' when call fun setText
+    // its state variable 
+    const [text, setText] = useState('Enter text here');
+    // text = "new text"; // wrong way to change the state 
+    // correct way
+    // setText("New Value");
+
+
+    // handleUpClick function we some one click on button
+    const handleUpClick = ()=>{
+        // console.log("Uppercase was clciked" + text);
+        let newText = text.toUpperCase();
+        setText(newText);
+        props.showAlert("Converted to uppercase!", "success");
+    }
+
+    const handleLoClick = ()=>{
+        // console.log("Uppercase was clciked" + text);
+        let newText = text.toLowerCase();
+        setText(newText);
+        props.showAlert("Converted to lowercase!", "success");
+    }
+
+    const clearText = ()=>{
+        let newText = '';
+        setText(newText);
+        props.showAlert("Clear Textarea!", "success");
+    }
+
+    // copy text
+    const handleCopy = ()=>{
+        let newText = document.getElementById("myBox");
+        newText.select();
+        // newText.setSelectionRange(0, 9999);
+        navigator.clipboard.writeText(newText.value);
+        props.showAlert("Copy all Text!", "success");
+    }
+
+    // remove extra spaces | regx
+    const handleExtraSpaces = ()=>{
+        let newText = text.split(/[ ]+/);
+        setText(newText.join(" "));
+        props.showAlert("Remove Extra Spaces!", "success");
+    }
+
+    const handleOnChange = (event)=>{
+        console.log("On Change");
+        setText(event.target.value);
+    }
+
+  return (
+    <>
+    <div className="container" style={{color: props.mode==='dark'?'white':'#042743'}}>
+        <h1>{props.heading}</h1>
+        <div className="mb-3">
+            <textarea style={{backgroundColor: props.mode==='dark'?'grey':'white', color: props.mode==='dark'?'white':'#042743'}} className="form-control" value={text} onChange={handleOnChange} id="myBox" rows="8"></textarea>
+        </div>
+
+        <button onClick={handleUpClick} className="btn btn-primary mx-1">Convert to Uppercase</button>
+        <button onClick={handleLoClick} className="btn btn-primary mx-1">Convert to Lowercase</button>
+        <button onClick={clearText} className="btn btn-primary mx-1">Clear Text</button>
+        <button onClick={handleCopy} className="btn btn-primary mx-1">Copy Text</button>
+        <button onClick={handleExtraSpaces} className="btn btn-primary mx-1">Remove Space</button>
+        {/* handleExtraSpaces */}
+
+    </div>
+
+    <div className="container my-3" style={{color: props.mode==='dark'?'white':'#042743'}}>
+        <h2>Your text summary</h2>
+        <p>{text.split(" ").length} words and {text.length} characters</p>
+        <p>{0.008 * text.split(" ").length} Minutes read</p>
+        <h3>Preview :</h3>
+        <p>{text.length>0 ? text : "Enter Something in the textbox above to preview it here"}</p>
+    </div>
+    </>
+  )
+}
