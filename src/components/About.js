@@ -1,36 +1,42 @@
 import React, { useState } from "react";
 
 
-export default function About(){
+export default function About(props){
     // let myStyle = {
     //     color: 'white',
     //     backgroundColor: 'black',
     // }
 
     // use state 
-    const [myStyle, setMyStyle] = useState({
-        color: 'black',
-        backgroundColor: 'white',
-    })
+    // const [myStyle, setMyStyle] = useState({
+    //     color: 'black',
+    //     backgroundColor: 'white',
+    // })
+
+    let myStyle = {
+        color: props.mode === 'dark'? 'white' : '#042743',
+        backgroundColor: props.mode === 'dark'? 'rgb(36 74 104)' : 'white',
+        
+    }
 
     const [btnText, setBtnText] = useState("Enable Dark Mode")
 
-    const toggleStyle = ()=>{
-        if(myStyle.color == 'black'){
-            setMyStyle({
-                color: 'white',
-                backgroundColor: 'black',
-                border: '1px solid white'
-            });
-            setBtnText("Enable Light Mode");
-        } else {
-            setMyStyle({
-                color: 'black',
-                backgroundColor: 'white',
-            });
-            setBtnText("Enable Dark Mode");
-        }
-    }
+    // const toggleStyle = ()=>{
+    //     if(myStyle.color == 'black'){
+    //         setMyStyle({
+    //             color: 'white',
+    //             backgroundColor: 'black',
+    //             border: '1px solid white'
+    //         });
+    //         setBtnText("Enable Light Mode");
+    //     } else {
+    //         setMyStyle({
+    //             color: 'black',
+    //             backgroundColor: 'white',
+    //         });
+    //         setBtnText("Enable Dark Mode");
+    //     }
+    // }
     
 
 
@@ -40,7 +46,7 @@ export default function About(){
         
         // apply css->myStyle is obj
         <div className="container" style={myStyle}>
-            <h1 className="my-3">About Us</h1>
+            <h1 className="my-3" style={{color: props.mode === 'dark'? 'white' : '#042743'}}>About Us</h1>
             <div className="accordion" id="accordionExample">
             <div className="accordion-item">
                 <h2 className="accordion-header">
@@ -82,9 +88,9 @@ export default function About(){
 
 
         {/* button for dark mode */}
-        <div className="container my-3">
+        {/* <div className="container my-3">
         <button onClick={toggleStyle} type="button" className="btn btn-primary">{btnText}</button>
-        </div>
+        </div> */}
    
         </div>
     )
